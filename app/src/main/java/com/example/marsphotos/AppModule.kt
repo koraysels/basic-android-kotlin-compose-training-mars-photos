@@ -14,7 +14,7 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideRepository(): MarsPhotosRepository {
-        return NetworkMarsPhotosRepository(marsApiService = MarsApi.retrofitService)
-    }
+    fun provideRepository(): MarsPhotosRepository =
+        NetworkMarsPhotosRepository(marsApiService = MarsApi.retrofitService)
+
 }
