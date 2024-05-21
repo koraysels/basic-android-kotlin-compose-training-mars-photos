@@ -6,27 +6,18 @@ import retrofit2.Retrofit
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.POST
 
-
-private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com"
-
-
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
-    .baseUrl(BASE_URL)
-    .build()
 
 interface MarsApiService {
     @GET("photos")
     suspend fun getPhotos(): List<MarsPhoto>
-}
 
-object MarsApi {
-    //    Dit kan ook, maar beter lazy
-    //    val retrofitService: MarsApiService = retrofit.create(MarsApiService::class.java)
-
-    val retrofitService: MarsApiService by lazy {
-        retrofit.create(MarsApiService::class.java)
-    }
+    @Headers("Content-Type: application/json")
+    @POST("photos")
+    suspend fun addPhoto(@Body photo: MarsPhoto) : Call<MarsPhoto>
 }
